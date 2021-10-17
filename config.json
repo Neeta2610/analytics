@@ -1,0 +1,15 @@
+{
+    "port": 3000,
+    "mongodb": {
+        "host": "localhost",
+        "db": "analytics",
+        "port": 27017,
+        "max_pool_size": 500,
+        "username": "",
+        "password": "",
+        "options": {
+            "useUnifiedTopology": true,
+            "useNewUrlParser": true
+        }
+    }
+}
