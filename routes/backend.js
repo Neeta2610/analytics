@@ -17,6 +17,10 @@ const pusher = new Pusher({
 router.use(checkClient);
 
 router.use((req, res, next) => {
+    var ip = (req.headers['x-forwarded-for'] || '').split(',').pop().trim() ||
+        req.socket.remoteAddress
+    console.log(ip, "headers ip", req.clientIp, "client IP value is here");
+    console.log("req path value is here", req.path, req.query);
     const db = getDb();
     let requestTime = Date.now();
     res.on('finish', async () => {
