@@ -52,7 +52,7 @@ module.exports = {
             getRequestsPerHour,
             getTotalRequests
         ]).then(results => {
-
+            // console.log("results : ",results);
             return {
 
                 averageResponseTime: results[0][0].averageResponseTime,
