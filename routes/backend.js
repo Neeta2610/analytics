@@ -25,7 +25,7 @@ router.use((req, res, next) => {
     }
     const db = getDb();
     let requestTime = Date.now();
-    let collectionName = "requestlogs" + req.clientIp + getTableName()
+    let collectionName = "requestlogs" + "_" + req.clientIp + "_" + getTableName()
     res.on('finish', async () => {
         if (req.path === '/analytics') {
             return;
