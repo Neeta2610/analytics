@@ -24,7 +24,7 @@ app.set('view engine', 'hbs');
 
 db.mongoConnect((db) => {
     app.db = db;
-    app.listen(config.port || 3000);
+    app.listen(process.env.PORT || 3000);
 });
 
 module.exports = app;
