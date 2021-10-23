@@ -5,8 +5,8 @@
         "db": "analytics",
         "port": 27017,
         "max_pool_size": 500,
-        "username": "",
-        "password": "",
+        "username": "Airport",
+        "password": "0D80aY6DwSmdJCaN",
         "options": {
             "useUnifiedTopology": true,
             "useNewUrlParser": true
