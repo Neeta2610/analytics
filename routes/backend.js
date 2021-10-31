@@ -13,6 +13,7 @@ const pusher = new Pusher({
     secret: process.env.PUSHER_APP_SECRET,
     cluster: process.env.PUSHER_APP_CLUSTER
 });
+console.log(pusher);
 
 router.use(checkClient);
 
@@ -57,7 +58,11 @@ router.get('/wait/:seconds', async (req, res, next) => {
 
 router.get('/analytics', (req, res, next) => {
     require('../analytics_service').getAnalytics()
-        .then(analytics => res.render('analytics', { analytics }));
+        .then(analytics => 
+            
+            { 
+                // console.log("analytics data : ",analytics);
+                res.render('analytics', { data:analytics })});
 });
 
 module.exports = router;

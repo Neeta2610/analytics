@@ -44,7 +44,7 @@ module.exports = {
                 }
             }
         ]).toArray();
-
+        let barChartArray = [];
         return Promise.all([
             getAverageResponseTime,
             getStatsPerRoute,
@@ -52,7 +52,16 @@ module.exports = {
             getRequestsPerHour,
             getTotalRequests
         ]).then(results => {
-
+            console.log("Bar arrray");
+            console.log("results : ",results);
+            if(results[1].length>0){
+                results[1].forEach(e=>{
+                    barChartArray.push({
+                        name: e._id.url,
+                        data: [e.numberOfRequests]
+                    })
+                })
+            }
             return {
 
                 averageResponseTime: results[0][0].averageResponseTime,
@@ -60,6 +69,7 @@ module.exports = {
                 requestsPerDay: results[2],
                 requestsPerHour: results[3],
                 totalRequests: results[4],
+                barChartArray : barChartArray
             };
         })
     }
