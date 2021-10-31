@@ -60,7 +60,8 @@ router.get('/analytics', (req, res, next) => {
     require('../analytics_service').getAnalytics()
         .then(analytics => 
             
-            { console.log("analytics data : ",analytics);
+            { 
+                // console.log("analytics data : ",analytics);
                 res.render('analytics', { data:analytics })});
 });
 
