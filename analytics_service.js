@@ -58,7 +58,7 @@ module.exports = {
                 results[1].forEach(e=>{
                     barChartArray.push({
                         name: e._id.url,
-                        data: [e.numberOfRequests]
+                        y: e.numberOfRequests
                     })
                 })
             }

@@ -7,6 +7,7 @@
 
 <figure class="highcharts-figure">
     <div id="container"></div>
+    <div class="pie-container"></div>
     <h1>
         <%-data.totalRequests%>
     </h1>
@@ -22,30 +23,79 @@
     // Create the chart
     var jsonData = JSON.parse('<%-JSON.stringify(data)%>');
     console.log(jsonData);
-    Highcharts.chart('container', {
-        chart: {
-            type: 'column'
-        },
-        title: {
-            text: 'API Analytics'
-        },
-        subtitle: {
-            text: 'API'
-        },
-        
-        plotOptions: {
-            column: {
-                pointPadding: 0.2,
-                borderWidth: 0,
-                // zones: [{
-                //     value: successCount,
-                //     color: "#e60000"
-                // }, {
-                //     color: "#2ed8b6"
-                // }]
-            }
-        },
-        series: jsonData.barChartArray
+    // Highcharts.chart('container', {
 
-    });
+    //     title: {
+    //         text: 'API response time analysis'
+    //     },
+
+    
+
+       
+    //     legend: {
+    //         layout: 'vertical',
+    //         align: 'right',
+    //         verticalAlign: 'middle'
+    //     },
+
+    //     plotOptions: {
+    //         series: {
+    //             label: {
+    //                 connectorAllowed: true
+    //             }
+    //             // pointStart: 2010
+    //         }
+    //     },
+
+    //     series:jsonData.barChartArray,
+
+    //     responsive: {
+    //         rules: [{
+    //             condition: {
+    //                 maxWidth: 500
+    //             },
+    //             chartOptions: {
+    //                 legend: {
+    //                     layout: 'horizontal',
+    //                     align: 'center',
+    //                     verticalAlign: 'bottom'
+    //                 }
+    //             }
+    //         }]
+    //     }
+
+    // });
+
+    Highcharts.chart('container', {
+    chart: {
+        plotBackgroundColor: null,
+        plotBorderWidth: null,
+        plotShadow: false,
+        type: 'pie'
+    },
+    title: {
+        text: 'Browser market shares in January, 2018'
+    },
+   
+    accessibility: {
+        point: {
+            valueSuffix: '%'
+        }
+    },
+    plotOptions: {
+        pie: {
+            allowPointSelect: true,
+            cursor: 'pointer',
+            dataLabels: {
+                enabled: false
+            },
+            showInLegend: true
+        }
+    },
+    series: [{
+        name: 'requests',
+        colorByPoint: true,
+        data: jsonData.barChartArray
+    }]
+});
 </script>
