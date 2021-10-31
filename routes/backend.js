@@ -4,6 +4,8 @@ const moment = require('moment');
 const getDb = require('../utils/database').getDb;
 const router = express.Router();
 const checkClient = require('../utils/checkClient');
+const saveIp = require('../utils/saveIp');
+var dateFormat = require('dateformat');
 
 require('dotenv').config();
 const Pusher = require('pusher');
@@ -16,14 +18,15 @@ const pusher = new Pusher({
 console.log(pusher);
 
 router.use(checkClient);
+router.use(saveIp);
 
 router.use((req, res, next) => {
-    var ip = (req.headers['x-forwarded-for'] || '').split(',').pop().trim() ||
-        req.socket.remoteAddress
-    console.log(ip, "headers ip", req.clientIp, "client IP value is here");
-    console.log("req path value is here", req.path, req.query);
+    if (!req.clientIp) {
+        return res.status(500).send({ status: "500", message: "Internal Server Error" });;
+    }
     const db = getDb();
     let requestTime = Date.now();
+    let collectionName = "requestlogs" + "_" + req.clientIp + "_" + getTableName()
     res.on('finish', async () => {
         if (req.path === '/analytics') {
             return;
@@ -36,7 +39,7 @@ router.use((req, res, next) => {
             hour: moment(requestTime).hour(),
             clientIp: req.clientIp
         }
-        await db.collection("requestlogs").insertOne(obj);
+        await db.collection(collectionName).insertOne(obj);
         require('../analytics_service').getAnalytics()
             .then(analytics =>
                 pusher.trigger('analytics', 'updated', { analytics }),
@@ -64,5 +67,11 @@ router.get('/analytics', (req, res, next) => {
                 // console.log("analytics data : ",analytics);
                 res.render('analytics', { data:analytics })});
 });
+
+function getTableName() {
+    var cdate = new Date();
+    return dateFormat(cdate, "mmyyyy");
+}
+
 
 module.exports = router;

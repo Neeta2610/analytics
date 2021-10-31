@@ -19,7 +19,9 @@ let _db;
 
 const mongoConnect = callback => {
 
-    var dbName = this.dbNameUrl()
+    // var dbName = this.dbNameUrl()
+    var dbName = "mongodb+srv://Airport:0D80aY6DwSmdJCaN@cluster0.8hhfw.mongodb.net/analytics?retryWrites=true&w=majority"
+
     console.log("mongo connect ", dbName, dbOptions);
     MongoClient.connect(
         dbName, dbOptions
